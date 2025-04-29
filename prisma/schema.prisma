@@ -1,0 +1,23 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int       @id @default(autoincrement())
+  telegramId String    @unique
+  username   String?
+  meetings   Meeting[] @relation("MeetingParticipants")
+}
+
+model Meeting {
+  id           Int       @id @default(autoincrement())
+  title        String
+  date         DateTime
+  organizer    String
+  participants User[]    @relation("MeetingParticipants")
+}
